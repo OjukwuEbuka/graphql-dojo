@@ -59,6 +59,13 @@ const AuthorType = new GraphQLObjectType({
                 // return books.filter(({authorId}) => authorId == parent.id)
                 return Book.find({authorId: parent.id});
             }
+        },
+        otherBooks: {
+            type: new GraphQLList(BookType),
+            args: {id: {type: GraphQLID}},
+            resolve(parent, args) {
+                return Book.find({authorId: parent.id, _id: {$ne: args.id}});
+            }
         }
     })
 })

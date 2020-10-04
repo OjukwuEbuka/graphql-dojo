@@ -6,7 +6,7 @@ import { ApolloProvider } from '@apollo/client';
 import BookList from './components/BookList';
 import AddBook from './components/AddBook';
 import BookDetails from './components/BookDetails';
-import { AppContext } from './lib/contextLib';
+import { bookDetailContext } from './lib/contextLib';
 
 // Set up Apollo
 const client = new ApolloClient({
@@ -15,19 +15,19 @@ const client = new ApolloClient({
 
 
 function App() {
-  const [chosenBook, setBook] = useState("");
+  const [chosenBook, setBook] = useState(null);
 
   return (
-    <AppContext.Provider value={{chosenBook, setBook}}>
-      <ApolloProvider client={client}>
-        <div className="main">
+    <ApolloProvider client={client}>
+        <div id="main">
           <h1>Ninja's Reading List</h1>
-          <BookList />
-          <BookDetails />
+          <bookDetailContext.Provider value={{chosenBook, setBook}}>
+            <BookList />
+            <BookDetails />
+          </bookDetailContext.Provider>
           <AddBook />
         </div>
-      </ApolloProvider>
-    </AppContext.Provider>
+    </ApolloProvider>
   );
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useQuery} from '@apollo/client';
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
 import { BooksQuery } from '../queries';
 import { useAppContext } from '../lib/contextLib';
 
@@ -8,13 +8,15 @@ function BookList() {
     const { setBook } = useAppContext();
     // console.log(data);
 
+    useEffect(() => {
+      if(data && data.books){
+        setBook(data.books[0].id);
+      }
+    }, [data, setBook])
+    
     const handleClick = (e) => {
       setBook(e.target.getAttribute('id'));
-      // console.log(e.target.getAttribute('id'));
-      // console.log(chosenBook);
     }
-
-    // if(data && data.books) setBook(data.books[0].id);
 
     const books = () => {
         if(loading)return <li>Loading</li>;
@@ -28,7 +30,7 @@ function BookList() {
     }
 
   return (
-    <div className="main">
+    <div id="book-list">
       <ul>
           {books()}
       </ul>

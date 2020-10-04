@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
 
 
-export const AppContext = createContext(null);
+export const bookDetailContext = createContext(null);
 
 export function useAppContext() {
-  return useContext(AppContext);
+  return useContext(bookDetailContext);
 }

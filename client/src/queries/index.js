@@ -23,12 +23,16 @@ const BooksQuery = gql`
 
 // Fetch a Book
 const BookQuery = gql`
-    query Book($id: ID!) {
+    query Book($id: ID) {
         book (id:$id){
             name
             genre
             author{
                 name
+                otherBooks (id:$id) {
+                    name
+                    id
+                }
             }
         }
     }
